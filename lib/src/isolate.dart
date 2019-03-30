@@ -381,12 +381,13 @@ class VMIsolateRef {
   Future<VMSourceReport> getSourceReport(
       {bool includeCoverageReport: true,
       bool includePossibleBreakpoints: true,
-      bool forceCompile: false}) async {
+      bool forceCompile: false,
+      String rootLibUri}) async {
     var reports = <String>[];
     if (includeCoverageReport) reports.add('Coverage');
     if (includePossibleBreakpoints) reports.add('PossibleBreakpoints');
 
-    var params = <String, dynamic>{'reports': reports};
+    var params = <String, dynamic>{'reports': reports, 'rootLibUri': rootLibUri};
     if (forceCompile) params['forceCompile'] = true;
 
     var json = await _scope.sendRequest('getSourceReport', params);
